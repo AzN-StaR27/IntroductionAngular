@@ -1,0 +1,68 @@
+Création du favorite component
+    Par défaut, il va afficher une ⭐.
+    quand on clique dessus, ⭐ devient ☀️;  
+
+
+//Soluce
+1)
+creer notre component
+ng generate component componenst/favorite
+
+2)
+aller tout de suite dans notre app.component.html effacer TOUT le contenu et rajouter seulement la balise app-favorite
+
+3)
+ng serve verifier que ça fonctionne bien
+on clique sur localhost:4200
+(affiche bien favorite works ! -> ok)
+
+4)
+on va dans favorite.component.ts 
+pour créer enum Star{
+    EMPTY= '⭐',
+    FILLED= '☀️'
+}
+((on est pas obligé de passer par un Enum mais l'enum permet d'avoir 2états et rien d'autres pour notre étoile))
+qui aura 2valeurs, l'état avec l'étoide vide(EMPTY) et l'état avec l'étoile remplie(FILLED)
+
+on va créer une variable star dans la classe FavoriteComponent qui représentera l'état de notre étoile 
+on donne par défaut la valeur vide (star = Star.EMPTY;)
+
+5)
+dans le favorite.component.html
+on crée une balise p avec en contenu notre variable star entre 2moustaches
+avec un element on click pour faire l'appel de la fonction ToggleIsFavorite
+<p (click)="toggleIsFavorite()">{{star}}</p>
+
+6)
+Pour créer cette fonction toggleIsFavorite() on retourne dans le favoritecomponent.ts, dans la class FavoriteComponent:
+la fonction inversera l'état de mon étoile:
+  toggleIsFavorite(){
+
+    this.star = this.star === Star.EMPTY ? Star.FILLED : Star.EMPTY;
+
+  }
+
+
+//une autre solution 
+
+dans favoritecomponent.ts, dans la class favoritecomponent : 
+starOn:boolean= true;
+
+myStar(){
+    this.starOn=!this.starOn
+}
+
+dans favorite.component.html:
+
+<p (click)="myStar()" [innerHTML]="starOn ? '⭐' : '☀️'"</p>
+
+
+ne pas oublier le git add .
+git commit --amend
+git push --force
+
+
+
+
+

@@ -1,0 +1,30 @@
+<input type="text" [disabled]="isNotAllowedToWrite" (keyup.enter)="changeUsername(usernameInput)" #usernameInput />
+<!--Les brackets autour de disabled permet de dire que isAllowedToWrite entre les "" est du javascript et donc la propriété disabled est liée à la variable isAllowedToWrite-->
+<!-- Si isNotAllowedToWrite est true, l'attribut disabled est activé et est visible dans l'inspecteur du navigateur-->
+
+<p>
+    binding par devant par derrière
+</p>
+
+<input type="text" [disabled]="isNotAllowedToWrite" [(ngModel)]="username" />
+<!-- crochet parenthese car la donnée va se transmettre dans les 2 sens
+ les crochets javascript -> html
+ les parenthèses html -> javascript -->
+<!-- on peut retirer le 'eventlistener' keyup ça marche qd même -->
+
+<p [class.premium]="isPremium" class="bidon" [style.backgroundColor]="isPremium ? 'lavender' : 'burlywood'">
+    <!-- si isPremium est true on ajoute la class premium comme attribut à notre p -->
+    {{username}}
+</p>
+
+<p [ngClass]="{
+    premium: isPremium,
+    bidon: isPremium
+   
+}" [ngStyle]="{
+    border: isPremium ? '1px solid purple' : 'none',
+    fontSize : isPremium ? '32px' : '1em'
+}">
+    Respectez les loutres svp.
+    Le reste c'est pas grave.
+</p>

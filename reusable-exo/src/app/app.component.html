@@ -1,0 +1,23 @@
+<app-zippy title="Ma collection de loutre" manager='Romain' [isContentVisible]="true" [clickCount]="clickCountPerAnimal.otter" (titleClicked)="updateClickCount('otter')">
+   <!--on met des crochets autour de isContentVisible pour dire qu'il confonde pas avec une chaine de caracteres et pour qu'il comprenne bien que c'est un booléen  -->
+  <ng-container>
+    <p>
+      La loutre de chantier
+    </p>
+    <p>
+      La loutre clean code      
+    </p>
+    <button>
+      Abonnez-vous aux loutres
+    </button>
+  </ng-container>
+</app-zippy>
+
+<app-zippy title="Ma collection de sf" manager="Christophe" [clickCount]="clickCountPerAnimal.bat" (titleClicked)="updateClickCount('bat')">
+
+  <ng-container>
+    <p>
+      la chauve souris souris
+    </p>
+  </ng-container>
+</app-zippy>

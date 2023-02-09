@@ -1,0 +1,61 @@
+<app-post-card postTitle="Mon nouveau title" (clickTitle)="handleClickTitle($event)">
+    <ng-container class="content"> 
+        Mon contenu magique
+    </ng-container>
+    <!-- ng-container au lieu d'une div comme ça on a pas de div en trop déjà contenu dans notre balise p (mieux pour le SEO)
+    Dans l'inspecteur on a rien tandis qu'avec la div on a une div dans le p -->
+</app-post-card>
+
+<ng-template #pikachu>
+<pre>
+    quu..__
+    $$$b  `---.__
+     "$$b        `--.                          ___.---uuudP
+      `$$b           `.__.------.__     __.---'      $$$$"              .
+        "$b          -'            `-.-'            $$$"              .'|
+          ".                                       d$"             _.'  |
+            `.   /                              ..."             .'     |
+              `./                           ..::-'            _.'       |
+               /                         .:::-'            .-'         .'
+              :                          ::''\          _.'            |
+             .' .-.             .-.           `.      .'               |
+             : /'$$|           .@"$\           `.   .'              _.-'
+            .'|$u$$|          |$$,$$|           |  <            _.-'
+            | `:$$:'          :$$$$$:           `.  `.       .-'
+            :                  `"--'             |    `-.     \
+           :##.       ==             .###.       `.      `.    `\
+           |##:                      :###:        |        >     >
+           |#'     `..'`..'          `###'        x:      /     /
+            \                                   xXX|     /    ./
+             \                                xXXX'|    /   ./
+             /`-.                                  `.  /   /
+            :    `-  ...........,                   | /  .'
+            |         ``:::::::'       .            |<    `.
+            |             ```          |           x| \ `.:``.
+            |                         .'    /'   xXX|  `:`M`M':.
+            |    |                    ;    /:' xXXX'|  -'MMMMM:'
+            `.  .'                   :    /:'       |-'MMMM.-'
+             |  |                   .'   /'        .'MMM.-'
+             `'`'                   :  ,'          |MMM<
+               |                     `'            |tbap\
+                \                                  :MM.-'
+                 \                 |              .''
+                  \.               `.            /
+                   /     .:::::::.. :           /
+                  |     .:::::::::::`.         /
+                  |   .:::------------\       /
+                 /   .''               >::'  /
+                 `',:                 :    .'
+                                      `:.:' Tim Park
+</pre>
+
+
+</ng-template>
+<ng-template #board>
+    J'ai pas trouvé chef
+</ng-template>
+
+<div *ngIf=" 1=== 1 then pikachu else board">
+    Vous pouvez écrire n'importe quoi !
+    Ce texte ne sera jamais affiché.
+</div>

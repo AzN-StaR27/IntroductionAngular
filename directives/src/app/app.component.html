@@ -1,0 +1,57 @@
+
+
+
+
+
+<div *ngIf="false"> <!--Si la cdt est fausse la div n'apparaitra pas du tout dans l'html-->
+  Ce texte est caché à cause d'une condition
+</div>
+
+<div *ngIf="true">
+  Ce texte n'est pas caché car ma condition est vrai
+</div>
+
+<ul>
+  <li *ngFor="let color of colors; index as i; even as IsEven" [ngStyle]="{color:colors[i]}">
+    {{color}}
+    <p *ngIf="IsEven">
+      Cette couleur se trouve à un index pair
+
+    </p>
+
+  </li>
+</ul>
+
+<div [ngSwitch]="viewmode">
+  <!-- Pour le cas où viewmode est égal à list -->
+  <p *ngSwitchCase="'list'">
+    Vue Liste
+  </p>
+  <p *ngSwitchCase="'kanban'">
+    Vue Kanban
+  </p>
+  <p *ngSwitchDefault="'banane'">
+    Cheh
+  </p>
+
+</div>
+<button (click)="viewmode = 'list'">LIST</button>
+<button (click)="viewmode = 'kanban'">KANBAN</button>
+<!-- 2boutons qui viennent changer la valeur de viewmode  -->
+
+{{ "mArIO" | lowercase | uppercase }}
+<!-- les pipes agissent comme des tuyaux dans mario -->
+<!-- fonctionne de la gauche vers la droite -->
+<!-- la chaine de caractere marIO va d'abord  -->
+<!-- être transformé en minuscule puis en majuscule -->
+
+{{ 42 | currency : 'EUR'}}
+<!-- affiche $42.00 sans argument-->
+<!-- si on passe un argument exple euro, convertit en la monnaie en question -->
+
+
+{{ "Kévyn avec un gros q" | spongebob : 'Imaginons': 'Que': 42 }}
+<!-- Imaginons que 42, nos 3arguments qui vont être stockés dans ...args -->
+
+
+

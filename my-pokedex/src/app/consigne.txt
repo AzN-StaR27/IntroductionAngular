@@ -1,0 +1,7 @@
+// ameliore le code pour le rendre plus dynamique au lieux des valeurs dur.
+// les variables : 
+// initialColor au chargement de la page
+// defaultColor couleur par defaut si aucune couleur donnée
+// defaultHeight:la hauteur par defaut 
+
+// CES PROPRIETES DEVRONT ETRE PRIVEES

@@ -1,0 +1,294 @@
+
+Créer un composant zippy: 
+    cela sera un composant avec un titre et un contenu ( pouvant être de l'html). Par defaut , le contenu est caché mais il s'affiche lorsquon clique sur le titre 
+
+
+
+soluce : 
+
+1)
+ng generate component components/zippy
+ng g c components/zippy
+
+2)
+dans app.component.html 
+on ajoute la balise app-zippy: 
+<app-zippy></app-zippy>
+
+on vérifie sur le localhost -> si zippy works ! affiché sur navigateur c'est OK
+
+3)
+dans zippy.component.html
+on écrit :
+<div>
+    <h3>
+        titre
+    </h3>
+    <div>
+        Contenu
+    </div>
+</div>
+
+
+4)
+dans zippy.component.ts
+on écrit dans la class ZippyComponent{}
+
+   @Input() declare title : string; //zippy reçoit un titre, on donne pas de valeur par défaut donc si on reçoit pas de titre on affiche rien
+
+
+
+5)
+maintenant qu'on a déclaré title
+on peut aller remplacer notre titre h3 dans notre zippy.component.html par {{title}}
+
+<div>
+    <h3>
+        {{title}}
+    </h3>
+    <div>
+        Contenu
+    </div>
+</div>
+
+
+6)
+on retourne dans app.component.html : ajouter notre 'attribut' title à notre balise app-zippy
+<app-zippy title="Ma collection de loutre"></app-zippy>
+
+
+7) maintenant on va s'occuper de la partie où on veut cacher le contenu et lier cette fonctionnalité 
+au clic du titre
+donc on va dans zippy.component.html :
+on écrit 
+
+<div>
+    <h3 (click)="toggleContentVisibility()">
+        {{title}}
+    </h3>
+    <div>
+        Contenu
+    </div>
+</div>
+
+8)On va dans le zippy.component.ts créer cette fonction
+on écrit :
+
+ isContentVisible = false; // on crée une nouvelle variable qui commutera entre true false avec la fonction
+
+toggleContentVisibility(){
+    this.isContentVisible = !this.isContentVisible; 
+}
+
+
+9)
+dans zippy.component.html: 
+on vient binder à notre div un attribut [hidden] : lui-même lié à notre variable isContentVisible : 
+
+<div>
+    <h3 (click)="toggleContentVisibility()">
+        {{title}}
+    </h3>
+    <div [hidden]="isContentVisible">
+        Contenu
+    </div>
+</div>
+
+on vérifie sur notre localhost le contenu disparait bien au clic du titre, c'est OK 
+
+
+10)dernière élément de la consigne c'est qu'on puisse passer n'importe quel contenu dans la div qui contient le texte : contenu
+pour ça on va créer dans zippy.component.html :
+
+<div>
+    <h3 (click)="toggleContentVisibility()">
+        {{title}}
+    </h3>
+    <div [hidden]="isContentVisible">
+        <ng-content></ng-content>
+    </div>
+</div>
+
+
+
+11) on rajoute aussi cette balise dans notre app.component.html avec un peu de contenu: 
+
+<app-zippy title="Ma collection de loutre">
+  <ng-container>
+    <p>
+      La loutre de chantier
+    </p>
+    <p>
+      La loutre clean code      
+    </p>
+    <button>
+      Abonnez-vous aux loutres
+    </button>
+  </ng-container>
+</app-zippy>
+
+on peut vérifier sur le localhost on affiche bien tout notre contenu au clic du titre c'est OOOOOK
+
+12) BONUS
+Imaginons on a plusieurs zippy dans notre app.component.html et on veut qu'un seul zippy ne s'affiche au clic du titre 
+
+on utilise un nouvel input : 
+dans app.component.html : 
+
+'''
+<app-zippy title="Ma collection de loutre" [isContentVisible]="true">
+   <!--on met des crochets autour de isContentVisible pour dire qu'il confonde pas avec une chaine de caracteres et pour qu'il comprenne bien que c'est un booléen  -->
+  <ng-container>
+    <p>
+      La loutre de chantier
+    </p>
+    <p>
+      La loutre clean code      
+    </p>
+    <button>
+      Abonnez-vous aux loutres
+    </button>
+  </ng-container>
+</app-zippy>
+
+<app-zippy title="Ma collection de sf">
+
+  <ng-container>
+    <p>
+      la chauve souris souris
+    </p>
+  </ng-container>
+</app-zippy>
+'''
+
+on va dans zippy.component.ts :
+on transforme notre isContentVisible en @input isContentVisible :
+
+'''
+export class ZippyComponent {
+
+  @Input() declare title : string; //zippy reçoit un titre, on donne pas de valeur par défaut donc si on reçoit pas de titre on affiche rien
+  //mon zippy component va gagner
+  @Input() isContentVisible = false;
+
+
+
+  toggleContentVisibility(){
+    this.isContentVisible = !this.isContentVisible;
+
+  }
+
+
+}
+'''
+
+dans zippy.component.html : 
+
+<div>
+    <h3 (click)="toggleContentVisibility()">
+        {{title}} - {{ manager }}
+    </h3>
+    <div [hidden]="isContentVisible">
+        <ng-content></ng-content>
+    </div>
+</div>
+
+
+
+
+dans zippy.component.ts : 
+
+  @Input() declare manager : string;
+
+
+
+dans app.component.html :
+à rajouter dans la 1re balise app-zippy :
+
+manager='Romain'
+
+
+13) On veut un compteur de click pour chaque titre
+
+dans zippy.component.ts :
+
+'''
+  @Input() declare clickCount : number;
+'''
+
+dans zippy.component.html : on rajoute la ligne <p> avec un cliqué {{ clickCount}} fois </p>
+
+'''
+<div>
+    <h3 (click)="toggleContentVisibility()">
+        {{title}} - {{ manager }}
+    </h3>
+    <p>
+        cliqué {{ clickCount }} fois
+    </p>
+    <div [hidden]="isContentVisible">
+        <ng-content></ng-content>
+    </div>
+</div>
+'''
+
+14)
+dans app.component.html on rajoute des [clickCount] dans les balises app-zippy qu'on initialise à la valeur qu'on veut: 
+
+'''
+<app-zippy title="Ma collection de loutre" manager='Romain' [isContentVisible]="true" [clickCount]="42">
+
+
+<app-zippy title="Ma collection de sf" manager="Christophe" [clickCount]="36">
+'''
+
+
+//pour l'instant ça s'affiche mais on peut pas encore augmenter la valeur
+
+15) pour augmenter la valeur on retourne dans zippy.component.ts : 
+on rajoute : un @output et la ligne this.titleClicked.emit() dans la fonction toggleContentVisibility() 
+
+  @Output() titleClicked = new EventEmitter();
+
+  toggleContentVisibility(){
+    this.titleClicked.emit() //mon titre a été cliqué quand on va cliquer dessus
+    this.isContentVisible = !this.isContentVisible;
+
+  }
+
+16)dans le app.component.html :
+on rajoute (titleClicked)="updateClickCount()"
+
+<app-zippy title="Ma collection de loutre" manager='Romain' [isContentVisible]="true" [clickCount]="42" (titleClicked)="updateClickCount()">
+
+17)on va dans app.component.ts pour rajouter :
+export class AppComponent {
+  title = 'reusable-exo';
+  clickCountPerAnimal = {
+    "otter":42,
+    "bat":36
+  }
+}
+
+18)on retourne dans app.component.html :
+
+on remplace le 42 par [clickCount]="clickCountPerAnimal.otter"
+même chose pour les chauves souris
+
+19)dans app.component.ts : 
+
+dans le export class AppComponent {}
+
+on rajoute la fonction updateClickCount:   
+
+'''
+updateClickCount(animal: keyof typeof this.clickCountPerAnimal){
+    this.clickCountPerAnimal[animal] = this.clickCountPerAnimal[animal] + 1;
+  }
+'''
+
+20) on a une erreur dans app.component.html car il faut passer un argument :
+
+(titleClicked)="updateClickCount()" on rajoute 'otter' entre les parentheses et 'bat' pr la 2e
+
+check sur localhost le compteur fonctionne, c'est OK
